@@ -64,6 +64,7 @@ int Stack::pop()
 	{
 		temp = data[top];
 		top--;
+		len--;
 		return temp;
 	}
 	else
