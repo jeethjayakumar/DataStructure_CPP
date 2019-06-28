@@ -65,7 +65,7 @@ char Stack::pop()
 	{
 		char temp = braces[top];
 		top --;
-		len --
+		len --;
 		return braces[top];
 	}
 }
@@ -134,7 +134,7 @@ bool validate_string(string inp)
 
 int main()
 {
-	string inp = "((a+b))";
+	string inp = "((a+b)}";
 	bool result = validate_string(inp);
 
 	if (result == true)
