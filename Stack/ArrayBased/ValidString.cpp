@@ -65,8 +65,7 @@ char Stack::pop()
 	{
 		char temp = braces[top];
 		top --;
-		len --;
-		return braces[top];
+		return temp;
 	}
 }
 
