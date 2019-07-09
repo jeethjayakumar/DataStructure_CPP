@@ -49,7 +49,9 @@ void Stack::push(int Item)
 	if (isFull() == true)
 		cout<<"Stack Full!!! Cannot add more elements!!!\n";
 	else
+	{
 		data[++top] = Item;
+	}
 }
 
 int Stack::getTopIdx()
@@ -94,7 +96,32 @@ bool Stack::isFull()
 	return (top == len);
 }
 
+void stackReversal(Stack &dat, Stack &rev_dat)
+{
+	int temp;
+	while(dat.isEmpty()==false)
+	{
+		temp = dat.pop();
+		rev_dat.push(temp);
+	}	
+}
+
 int main()
 {
+	Stack dat, rev_dat;
+	int a[] = {1,2,3,4,5};
+	int alen = sizeof(a)/sizeof(int);
+
+	for (int i =0 ; i < alen; i++)
+		dat.push(a[i]);
+
+	cout<<"Before Reversal, Input Stack:\n";
+	dat.dispFull();
+
+	stackReversal(dat, rev_dat);
+
+	cout<<"After Reversal, Stack:\n";
+	rev_dat.dispFull();
+ 
 	return 0;
 }
