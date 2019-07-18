@@ -11,8 +11,8 @@ class Queue
 	int front;
 	int rear;
 	double load_fact;
-	bool isEmpty();
 	bool isFull();
+	void reallocate();
 public:
 	Queue(int size=DEF_SIZE, double load_fact=LOAD_FACTOR);
 	~Queue();
@@ -21,7 +21,97 @@ public:
 	int getFront();
 	int getRear();
 	void dispQueue();	
+	bool isEmpty();
 };
+
+Queue::Queue(int size, double load_fact)
+{
+	if (size == 0)
+		this->size = DEF_SIZE;
+	else
+		this->size = size;
+
+	if (load_fact == 0.0)
+		this->load_fact = LOAD_FACTOR;
+	else
+		this->load_fact = load_fact;
+
+	data = new(nothrow) int[size];
+	front = -1;
+	rear = -1;	
+}
+
+Queue::~Queue()
+{
+	delete [] data;
+	front = -1;
+	rear = -1;
+	load_fact = 0.0;
+	size = 0;
+}
+
+bool Queue::isEmpty()
+{
+	return (front == -1);
+}
+
+bool Queue::isFull()
+{
+	return (((rear + 1)%size) == front);
+}
+
+void Queue::reallocate()
+{
+	cout<<"Stack Full... No  more data to enter!!!\n";
+}
+
+void Queue::enqueue(int item)
+{
+	if (isFull())
+	{
+		reallocate();
+	}
+	else
+	{
+		rear = (rear + 1) % size;
+		data[rear] = item;
+		if (front == -1) front = rear;
+	}
+}
+
+void Queue::dequeue()
+{
+	if (isEmpty())
+	{
+		cout<<"Queue is Empty... Nothing to dequeue...\n";
+	}
+	else
+	{
+		int val = data[front];
+		if (front == rear)
+			front = rear = -1;
+		else
+			front = (front+1)%size;
+		cout<<"Removing "<<val<<"\n";
+	}
+}
+
+int Queue::getFront()
+{
+	return data[front];
+}
+
+int Queue::getRear()
+{
+	return data[rear];
+}
+
+void Queue::dispQueue()
+{
+	for (int i = front; i <= rear; i++)
+		cout<<data[i]<<" ";
+	cout<<"\n";
+}
 
 int main()
 {
