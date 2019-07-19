@@ -17,7 +17,7 @@ public:
 	Queue(int size=DEF_SIZE, double load_fact=LOAD_FACTOR);
 	~Queue();
 	void enqueue(int item);
-	int dequeue();
+	void dequeue();
 	int getFront();
 	int getRear();
 	void dispQueue();	
@@ -30,7 +30,7 @@ Queue::Queue(int size, double load_fact)
 		this->size = DEF_SIZE;
 	else
 		this->size = size;
-
+	
 	if (load_fact == 0.0)
 		this->load_fact = LOAD_FACTOR;
 	else
@@ -62,21 +62,40 @@ bool Queue::isFull()
 
 void Queue::reallocate()
 {
-	cout<<"Stack Full... No  more data to enter!!!\n";
+	int newsize = size + (size * load_fact);
+	int *new_data = new int [newsize];
+
+	if (new_data == nullptr)
+	{
+		cout<<"Error reallocating memory!!! Aborting!!!\n";
+		delete [] data;
+		data = nullptr;
+		size = 0;
+		exit (-1);	
+	}
+	else
+	{
+		for (int i = front; i < size; i++)
+			new_data[i] = data[i];
+		delete [] data;
+		data = new_data;
+		size = newsize;
+		cout<<"New Queue size: "<<size<<"\n";	
+	}
 }
 
 void Queue::enqueue(int item)
 {
 	if (isFull())
 	{
+		cout<<"Queue space full... Increasing the size!!!\n";	
 		reallocate();
 	}
-	else
-	{
-		rear = (rear + 1) % size;
-		data[rear] = item;
-		if (front == -1) front = rear;
-	}
+
+	rear = (rear + 1) % size;
+	data[rear] = item;
+	
+	if (front == -1) front = rear;
 }
 
 void Queue::dequeue()
