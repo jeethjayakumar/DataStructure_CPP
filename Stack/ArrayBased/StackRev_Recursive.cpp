@@ -94,7 +94,50 @@ bool Stack::isFull()
 	return (top == len);
 }
 
+void populateStack(int temp, Stack &dat)
+{
+	int tmp;
+
+	if (dat.isEmpty() == true)
+	{
+		dat.push(temp);
+	}
+	else
+	{
+		tmp = dat.pop();
+		populateStack(temp, dat);
+		dat.push(tmp);
+	}
+}
+
+void stackReversal(Stack &dat)
+{
+	int temp;
+	
+	if (dat.isEmpty() != true)
+	{
+		temp = dat.pop();
+		stackReversal(dat);
+		populateStack(temp, dat);
+	}
+}
+
 int main()
 {
+	int a[]={1,2,3,4,5};
+	int alen = sizeof(a)/sizeof(int);
+	Stack dat;
+
+	for (int i = 0; i < alen; i++)
+		dat.push(a[i]);
+
+	cout<<"Before Reversal, Input Stack:\n";
+	dat.dispFull();
+
+	stackReversal(dat);
+
+	cout<<"After Reversal, Stack:\n";
+	dat.dispFull();
+
 	return 0;
 }
