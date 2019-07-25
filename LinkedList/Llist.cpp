@@ -198,25 +198,85 @@ void Llist::deleteNodebyIdx(int idx)
 
 int Llist::searchNode(int data)
 {
+	int count = 1;
+	bool found = false;
 
+	if (head->getData() == data)
+	{
+		return count;
+	}
+
+	curr = head->getNxtp();
+	while(curr != nullptr)
+	{
+		count++;
+		if (curr->getData() == data)
+		{
+			return count;
+		}
+		else
+		{
+			curr = curr->getNxtp();
+		} 
+	}	
+
+	if (found == false)
+		return -1;
 }
 
 void Llist::rotateNodeNtimes(int n)
 {
-
+	
 }
 
 int Llist::findMidNode()
 {
+	int len = 0;
+	curr = head;
 
+	while (curr != nullptr)
+	{
+		len ++;	
+		curr = curr->getNxtp();
+	}
+
+	int mid = len / 2;
+	int count = 0;
+	curr = head;
+	while (curr != nullptr)
+	{
+		count ++;
+		if (count == mid) break;
+		
+		curr = curr->getNxtp();
+	}
+
+	return curr->getData();
 }
 
 void Llist::display_List()
 {
+	curr = head;
 
+	while (curr != nullptr)
+	{
+		cout<<curr->getData()<<"->";
+		curr = curr->getNxtp();
+	}
+	cout<<"NULL\n";
 }
 
 int main()
 {
+	int a[] = {1,2,3,4,5,6,7,8,9,0};
+	int alen = sizeof(a)/sizeof(int);
+	Llist list;
+
+	for (int i = 0; i < alen; i++)
+		list.insertNodeEnd(a[i]);
+
+	cout<<"Input List: ";
+	list.display_List();
+	cout<<"\n";
 	return 0;:
 };
