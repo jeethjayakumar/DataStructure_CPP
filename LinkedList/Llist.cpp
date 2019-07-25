@@ -8,13 +8,15 @@ class Node
 public:
 	Node(int data = -1, Node *nxt_p = nullptr);
 	~Node();
+	void createNode(int data, Node *nxt);
+	int getData();
 };
 
 class Llist
 {
-	Node head;
-	Node curr;
-	Node tail;
+	Node *head;
+	Node *curr;
+	Node *tail;
 public:
 	Llist();
 	~Llist();
@@ -41,7 +43,10 @@ Node::~Node()
 
 Llist::Llist()
 {
-	
+	head = new Node();
+	curr = new Node();
+	tail = new Node();
+	head = curr = tail = nullptr;	
 }
 
 Llist::~Llist()
