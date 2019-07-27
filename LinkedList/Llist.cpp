@@ -9,7 +9,7 @@ public:
 	Node(int data = -1, Node *nxt_p = nullptr);
 	~Node();
 	int getData();
-	void setData(int &data);
+	void setData(int data);
 	void setNxtp(Node *nxt);
 	Node* getNxtp();
 };
@@ -49,7 +49,7 @@ int Node::getData()
 	return data;
 }
 
-void Node::setData(int &data)
+void Node::setData(int data)
 {
 	this->data = data;
 }
@@ -74,13 +74,20 @@ Llist::Llist()
 
 Llist::~Llist()
 {
-	delete head;
-	delete curr;
-	delete tail;
-	head = curr = tail = nullptr;	
+	Node *tmp;
+	curr = head;
+	while (curr != nullptr)
+	{
+		tmp = curr;
+		delete tmp;
+		tmp = nullptr;
+		curr = curr->getNxtp();
+	}
+	head = nullptr;
+	tail = nullptr;
 }
 
-void Llist::insertNodeBeg(int data)
+void Llist::insertNodeBeg(int &data)
 {
 	Node *temp = new Node(data, nullptr);	
 	
@@ -95,7 +102,7 @@ void Llist::insertNodeBeg(int data)
 	}
 }
 
-void Llist::insertNodeEnd(int data)
+void Llist::insertNodeEnd(int &data)
 {
 	Node *temp = new Node(data, nullptr);
 
@@ -110,7 +117,7 @@ void Llist::insertNodeEnd(int data)
 	}
 }
 
-void Llist::deleteNodebyNum(int data)
+void Llist::deleteNodebyNum(int &data)
 {
 	bool deleted = false;
 	
@@ -145,9 +152,10 @@ void Llist::deleteNodebyNum(int data)
 		cout<<"Number "<<data<<" not found in list to delete!!!\n";
 }
 
-void Llist::deleteNodebyIdx(int idx)
+void Llist::deleteNodebyIdx(int &idx)
 {
         bool deleted = false;
+	int count = 2;
 
 	if (idx <= 0)
 	{
@@ -163,7 +171,6 @@ void Llist::deleteNodebyIdx(int idx)
 	else
 	{
 		curr = head->getNxtp();
-		int count = 2;
 		
 		while (curr != nullptr)
 		{
@@ -196,7 +203,7 @@ void Llist::deleteNodebyIdx(int idx)
 	}
 }
 
-int Llist::searchNode(int data)
+int Llist::searchNode(int &data)
 {
 	int count = 1;
 	bool found = false;
@@ -224,7 +231,7 @@ int Llist::searchNode(int data)
 		return -1;
 }
 
-void Llist::rotateNodeNtimes(int n)
+void Llist::rotateNodeNtimes(int &n)
 {
 	
 }
@@ -278,5 +285,5 @@ int main()
 	cout<<"Input List: ";
 	list.display_List();
 	cout<<"\n";
-	return 0;:
+	return 0;
 };
